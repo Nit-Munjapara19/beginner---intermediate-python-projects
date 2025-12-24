@@ -5,7 +5,7 @@
 '''
 import random
 
-print("Let's Play stone paper scissors game")
+print("Let's Play stone paper scissors game :")
 print('''
         a  for  stone   
         b  for  paper   
