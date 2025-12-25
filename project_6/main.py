@@ -1,39 +1,43 @@
-Task = []
-while True:
-    print(" ==== TO-Do List ====")
-    print(" 1. Add Task")
-    print(" 2. Update Task")
-    print(" 3. Show Task")
-    print(" 4. Delete Task")
-    print(" 5. Exit")
+'''
+1 for stone
+-1 for paper
+0 for scissors
+'''
+import random
 
-    choice=int(input("Enter your choice : "))
+print("Let's Play stone paper scissors game :")
+print('''
+        a  for  stone   
+        b  for  paper   
+        c  for  scissors
+      ''')
 
-    if choice==1:
-        add_task=input("Enter a Task : ")
-        Task.append(add_task)
-        print(f"Task {add_task} has been successfully added...")
+a="stone"
+b="paper"
+c="scissors"
 
-    if choice==2:
-        update_task=input("Which task you want to update : ")  
-        if update_task in Task:
-            new_task=input("Enter new Task : ")  
-            index=Task.index(update_task)
-            Task[index]=new_task
-            print(f"Update task {new_task}")
+computer=random.choice([1,0,-1])
+you_chose = input("Enter Youer Choise : ")
 
-    if choice==3:
-        print(f"Total Task = {Task}")   
+Dictionary={'a':1,'b':-1,'c':0}
+reverseddic={1:"stone",-1:"paper",0:"scissors"}
 
-    if choice==4:
-        delete_task=input("Which Task Do You Want To Delete : ")  
-        if delete_task in Task: 
-            index_delete=Task.index(delete_task) 
-            del Task[index_delete]
-            print("Successfully deleted")
+you=Dictionary[you_chose]
 
-    if choice==5:
-        break       
+print(f"You chose {reverseddic[you]} and Computer chose {reverseddic[computer]} ")
 
-
-        
+if(computer==you):
+    print("It's a draw")
+else:    
+     if (computer==1 and you==0):
+       print("Lose!")
+     elif(computer==1 and you==-1):
+         print("Win!")    
+     elif(computer==0 and you==1):
+       print("Win!")    
+     elif(computer==0 and you==-1):
+       print("Lose!")        
+     elif(computer==-1 and you==1):
+       print("Lose!")    
+     elif(computer==-1 and you==0):
+       print("Win!")            

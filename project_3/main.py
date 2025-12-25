@@ -1,79 +1,82 @@
-import math    
-class Calculator:
-    def __init__(self):
-        print("🧮 Welcome to OOP Calculator!")
+board=["-","-","-",
+       "-","-","-",
+       "-","-","-"]
 
-    def add(self, a, b):
-        return a + b
+currentplayer = "X"
+winner = None
+gamerunning = True
 
-    def sub(self, a, b):
-        return a - b
+def printboard(board):
+    print(board[0] + " | " + board[1] + " | " + board[2])
+    print("---------")
+    print(board[3] + " | " + board[4] + " | " + board[5])
+    print("---------")
+    print(board[6] + " | " + board[7] + " | " + board[8])
 
-    def mul(self, a, b):
-        return a * b
-
-    def divide(self, a, b):
-        if b == 0:
-            return "You can't divide by zero"
-        return a / b
-    
-    def power(self,a,b):
-        return math.pow(a,b)
-    
-    def root(self,a):
-        if a<0:
-            return "❌ Cannot take square root of negative number"
-        return math.sqrt(a)
-
-    def run(self):
-
-        while True:
+def playerinput(board):
+    a=int(input("Enter number between 1 to 9 : "))  
+    if a>=1 and a<=9 and board[a-1]=="-":
+        board[a-1] = currentplayer
+    else:
+        switchplayer()
+        print("Oops something is worng")
          
+def checkhorizontle(board):
+    global winner
+    if board[0] == board[1] == board[2]  and board[1] != "-":
+        winner = board[0]
+        return True
+    elif board[3] == board[4] == board[5]  and board[4] != "-":
+        winner = board[3]
+        return True
+    elif board[6] == board[7] == board[8]  and board[7] != "-":
+        winner = board[6]
+        return True
 
-            num1_input = input("Enter 1st number (or 'q' to quit): ")
-            if num1_input.lower() == "q":
-                print("👋 Exiting calculator...")
-                break
+def checkrow(board):
+    global winner
+    if board[0] == board[3] == board[6]  and board[3] != "-":
+        winner = board[0]
+        return True
+    elif board[1] == board[4] == board[7]  and board[4] != "-":
+        winner = board[1]
+        return True
+    elif board[2] == board[5] == board[8]  and board[5] != "-":
+        winner = board[2]
+        return True
 
-            num2_input = input("Enter 2nd number (or 'q' to quit): ")
-            if num2_input.lower() == "q":
-                print("👋 Exiting calculator...")
-                break
+def checkdi(board):
+    global winner
+    if board[0]==board[4]==board[8] and board[4] != "-":
+        winner = board[0]
+        return True
+    elif board[2]==board[4]==board[6] and board[4] != "-":
+        winner = board[2]
+        return True
+    
+def checktie(board):
+    if "-" not in board:
+        printboard(board)
+        print("It's a Tie!")
+        gamerunning = False
 
-            try:
-                num1 = float(num1_input)
-                num2 = float(num2_input)
-            except ValueError:
-                print("❌ Invalid input, please enter numbers only.")
-                continue
+def checkwin():
+    global gamerunning
+    if checkhorizontle(board) or checkrow(board) or checkdi(board):      
+        print(f"The winner is {winner}") 
+        gamerunning = False 
 
-            print("\nSelect operation:")
-            print("1. Addition (+)")
-            print("2. Subtraction (-)")
-            print("3. Multiplication (*)")
-            print("4. Division (/)")
-            print("5. Exit")
 
-            choice = input("Enter choice (1/2/3/4/5): ")
+def switchplayer():
+    global currentplayer
+    if currentplayer == "X":
+        currentplayer = "O"
+    else:
+        currentplayer = "X"          
 
-            ans = None
-            if choice == "1":
-                ans = self.add(num1, num2)
-            elif choice == "2":
-                ans = self.sub(num1, num2)
-            elif choice == "3":
-                ans = self.mul(num1, num2)
-            elif choice == "4":
-                ans = self.divide(num1, num2)
-            elif choice == "5":
-                print("👋 Exiting calculator...")
-                break
-            else:
-                print("❌ Invalid choice")
-                continue
-
-            print(f"✅ Ans: {ans}\n")
-
-# To run the calculator, create an instance and call the run method
-calc = Calculator()
-calc.run()
+while gamerunning:
+    printboard(board)
+    playerinput(board)
+    checkwin()
+    checktie(board)
+    switchplayer()
